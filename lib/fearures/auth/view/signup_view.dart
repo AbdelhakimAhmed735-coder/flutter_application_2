@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/core/constants/app_colors.dart';
 import 'package:flutter_application_2/fearures/auth/widget/cusrom_bto.dart';
-import 'package:flutter_application_2/shared/custom_text.dart';
 import 'package:flutter_application_2/shared/custom_textfiled.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
