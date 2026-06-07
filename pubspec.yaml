@@ -66,6 +66,9 @@ flutter:
     - assets/logo/
     - assets/splach/
     - assets/test/
+    - assets/detail/
+    - assets/Sideoptions/
+    - assets/toppings/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

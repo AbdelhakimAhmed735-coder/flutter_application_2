@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/shared/custom_text.dart';
 import 'package:flutter_svg/svg.dart';

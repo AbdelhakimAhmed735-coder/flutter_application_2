@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/core/constants/app_colors.dart';
 import 'package:flutter_application_2/fearures/home/widgets/card_item.dart';
 import 'package:flutter_application_2/fearures/home/widgets/food_category.dart';
 import 'package:flutter_application_2/fearures/home/widgets/search_item.dart';
 import 'package:flutter_application_2/fearures/home/widgets/user_header.dart';
-import 'package:flutter_application_2/shared/custom_text.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_application_2/fearures/product/views/product_detailes_views.dart';
 import 'package:gap/gap.dart';
 
 class HomeViews extends StatefulWidget {
@@ -59,11 +56,21 @@ class _HomeViewsState extends State<HomeViews> {
                   crossAxisSpacing: 10,
                 ),
                 delegate: SliverChildBuilderDelegate((context, index) {
-                  return const CardItem(
-                    image: "assets/test/test.png",
-                    text: "Cheeseburger",
-                    desc: "Wendy's Burger",
-                    rate: "4.9",
+                  return GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) {
+                          return ProductDetailesViews();
+                        },
+                      ),
+                    ),
+                    child: const CardItem(
+                      image: "assets/test/test.png",
+                      text: "Cheeseburger",
+                      desc: "Wendy's Burger",
+                      rate: "4.9",
+                    ),
                   );
                 }, childCount: 10),
               ),
