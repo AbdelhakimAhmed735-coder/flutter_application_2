@@ -8,10 +8,13 @@ class CustomTextfiled extends StatefulWidget {
     required this.hite,
     required this.ispasword,
     required this.controller,
+    required this.fieldType,
   });
+
   final String hite;
   final bool ispasword;
   final TextEditingController controller;
+  final String fieldType;
 
   @override
   State<CustomTextfiled> createState() => _CustomTextfiledState();
@@ -36,20 +39,40 @@ class _CustomTextfiledState extends State<CustomTextfiled> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
+      obscureText: _obscureText,
+      cursorHeight: 20,
+      cursorColor: AppColors.primary,
+
       validator: (value) {
-        if (value == null || value.isEmpty) {
-          return widget.ispasword
-              ? "Please enter your password"
-              : "Please enter your email";
+        if (value == null || value.trim().isEmpty) {
+          switch (widget.fieldType) {
+            case "name":
+              return "Please enter your name";
+
+            case "email":
+              return "Please enter your email";
+
+            case "password":
+              return "Please enter your password";
+
+            default:
+              return "This field is required";
+          }
         }
 
-        if (!widget.ispasword) {
+        if (widget.fieldType == "name") {
+          if (value.trim().length < 3) {
+            return "Name must be at least 3 characters";
+          }
+        }
+
+        if (widget.fieldType == "email") {
           if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
             return "Please enter a valid email";
           }
         }
 
-        if (widget.ispasword) {
+        if (widget.fieldType == "password") {
           if (value.length < 8) {
             return "Password must be at least 8 characters";
           }
@@ -57,25 +80,40 @@ class _CustomTextfiledState extends State<CustomTextfiled> {
 
         return null;
       },
-      obscureText: _obscureText,
-      cursorHeight: 20,
-      cursorColor: AppColors.primary,
+
       decoration: InputDecoration(
-        suffixIcon: widget.ispasword
-            ? GestureDetector(
-                onTap: _togglePassword,
-                child: Icon(CupertinoIcons.eye),
-              )
-            : null,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-        ),
         hintText: widget.hite,
         fillColor: Colors.white,
         filled: true,
+
+        suffixIcon: widget.ispasword
+            ? IconButton(
+                onPressed: _togglePassword,
+                icon: Icon(
+                  _obscureText ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
+                ),
+              )
+            : null,
+
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.white),
+        ),
+
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: AppColors.primary),
+        ),
+
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red),
+        ),
+
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red),
+        ),
       ),
     );
   }

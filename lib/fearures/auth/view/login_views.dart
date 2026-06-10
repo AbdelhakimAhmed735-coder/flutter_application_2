@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/core/constants/app_colors.dart';
+import 'package:flutter_application_2/fearures/auth/view/signup_view.dart';
 import 'package:flutter_application_2/fearures/auth/widget/cusrom_bto.dart';
+import 'package:flutter_application_2/root.dart';
 import 'package:flutter_application_2/shared/custom_text.dart';
 import 'package:flutter_application_2/shared/custom_textfiled.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,6 +18,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -34,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Form(
                 key: formKey,
                 child: Column(
@@ -46,9 +49,8 @@ class _LoginViewState extends State<LoginView> {
                     const Gap(10),
 
                     const CustomText(
-                      text: "welcome back, Discover in the best fast food",
+                      text: "Welcome back, Discover the best fast food",
                       color: Colors.white,
-
                       size: 13,
                       Weight: FontWeight.w500,
                     ),
@@ -56,25 +58,62 @@ class _LoginViewState extends State<LoginView> {
                     const Gap(70),
 
                     CustomTextfiled(
-                      hite: 'Example@gmai.com',
+                      hite: 'Example@gmail.com',
                       ispasword: false,
                       controller: emailController,
+                      fieldType: 'email',
                     ),
 
                     const Gap(20),
 
                     CustomTextfiled(
-                      controller: passController,
                       hite: "Password",
                       ispasword: true,
+                      controller: passController,
+                      fieldType: 'password',
+                    ),
+
+                    const Gap(20),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Don't have an account? ",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignupView(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
 
                     const Gap(30),
+
                     Cutomauthbtn(
                       text: "Login",
                       onTap: () {
                         if (formKey.currentState!.validate()) {
-                          print("success Login");
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Root(),
+                            ),
+                          );
                         }
                       },
                     ),

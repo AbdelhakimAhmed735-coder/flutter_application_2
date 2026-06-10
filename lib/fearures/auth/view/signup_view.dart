@@ -1,68 +1,135 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/core/constants/app_colors.dart';
 import 'package:flutter_application_2/fearures/auth/widget/cusrom_bto.dart';
+import 'package:flutter_application_2/root.dart';
 import 'package:flutter_application_2/shared/custom_textfiled.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
-class SignupView extends StatelessWidget {
+class SignupView extends StatefulWidget {
   const SignupView({super.key});
 
   @override
+  State<SignupView> createState() => _SignupViewState();
+}
+
+class _SignupViewState extends State<SignupView> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController confirmpassController = TextEditingController();
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+    nameController.dispose();
+    confirmpassController.dispose();
+    super.dispose();
+  }
+
+  void signup() {
+    if (formKey.currentState!.validate()) {
+      if (passController.text != confirmpassController.text) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Passwords do not match")));
+        return;
+      }
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Root()),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
-    TextEditingController confirmpassController = TextEditingController();
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                Gap(200),
-                SvgPicture.asset("assets/logo/logo.svg"),
-                const Gap(80),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: AppColors.primary,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    const Gap(50),
 
-                CustomTextfiled(
-                  hite: 'Name',
-                  ispasword: false,
-                  controller: nameController,
-                ),
+                    SvgPicture.asset("assets/logo/logo.svg"),
 
-                const Gap(25),
-                CustomTextfiled(
-                  hite: 'Example@gmai.com',
-                  ispasword: false,
-                  controller: emailController,
-                ),
-                const Gap(25),
-                CustomTextfiled(
-                  controller: passController,
-                  hite: "Password",
-                  ispasword: true,
-                ),
-                const Gap(25),
+                    const Gap(60),
 
-                CustomTextfiled(
-                  controller: confirmpassController,
-                  hite: "confirm Password",
-                  ispasword: true,
+                    CustomTextfiled(
+                      hite: 'Name',
+                      ispasword: false,
+                      controller: nameController,
+                      fieldType: 'name',
+                    ),
+
+                    const Gap(20),
+
+                    CustomTextfiled(
+                      hite: 'Example@gmail.com',
+                      ispasword: false,
+                      controller: emailController,
+                      fieldType: 'email',
+                    ),
+
+                    const Gap(20),
+
+                    CustomTextfiled(
+                      hite: 'Password',
+                      ispasword: true,
+                      controller: passController,
+                      fieldType: 'password',
+                    ),
+
+                    const Gap(20),
+
+                    CustomTextfiled(
+                      hite: 'Confirm Password',
+                      ispasword: true,
+                      controller: confirmpassController,
+                      fieldType: 'password',
+                    ),
+
+                    const Gap(20),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Already have an account? ",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const Gap(25),
+
+                    Cutomauthbtn(text: "Sign Up", onTap: signup),
+                  ],
                 ),
-                const Gap(20),
-                Cutomauthbtn(
-                  text: "sign up",
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      print("success rgister");
-                    }
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         ),

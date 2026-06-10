@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/core/constants/app_colors.dart';
 import 'package:flutter_application_2/fearures/product/widgets/Side_options.dart';
 import 'package:flutter_application_2/fearures/product/widgets/spicy_slider.dart';
 import 'package:flutter_application_2/fearures/product/widgets/toppings.dart';
@@ -116,7 +115,7 @@ class _ProductDetailesViewsState extends State<ProductDetailesViews> {
                   ],
                 ),
               ),
-              Gap(100),
+              Gap(20),
             ],
           ),
         ),
